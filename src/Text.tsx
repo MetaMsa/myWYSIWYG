@@ -1,8 +1,7 @@
-export default function Text() {
+export default function Text({content}) {
   return (
     <>
-      <div title="text" className="bg-white" contentEditable="true" role="textbox" translate="no">
-        jhgh
+      <div className="bg-white" translate="no" dangerouslySetInnerHTML={{__html:content}}>
       </div>
     </>
   );

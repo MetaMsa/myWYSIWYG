@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "./App.css";
-import Text from "./Text";
+import Text from "./Text.tsx";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [clickedButton, setClickedButton] = useState("");
+  const [content, setContent] = useState("Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, quibusdam veritatis nobis beatae quas officiis, nemo explicabo et, architecto quos sint! Voluptate magni exercitationem dolores ipsum pariatur molestiae dolore ex!");
 
   const buttons = [
     {
@@ -27,15 +28,26 @@ function App() {
       text: "h3",
     },
   ];
+  const handleText = () =>
+  {
+    const selected = window.getSelection();
+    const selectedText = selected?.toString();
+    const newText = content.replace(selectedText!, `<${clickedButton}>${selectedText}</${clickedButton}>`);
+    setContent(newText);
+    selected?.deleteFromDocument();
+  }
 
   return (
     <>
       <div className="fixed-top">
         {buttons.map((button, index) => (
-          <button key={index} className="btn btn-secondary m-5">{button.text}</button>
+          <button onClick={() => {
+            setClickedButton(button.name)!;
+            handleText()
+          }} key={index} className="btn btn-secondary m-5">{button.text}</button>
         ))}
       </div>
-      <Text></Text>
+      <Text content={content}></Text>
     </>
   );
 }
